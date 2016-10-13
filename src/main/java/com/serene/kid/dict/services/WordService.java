@@ -61,7 +61,11 @@ public class WordService {
 
 	public List<Word> getWordsFromApache() {
 
-		final File apacheDictZip = downloadApacheDictionaryFile(); // new File(APACHE_DICT_TARGET_FILE);
+		File apacheDictZip = new File(APACHE_DICT_TARGET_FILE);
+
+		if (!apacheDictZip.exists()) {
+			apacheDictZip = downloadApacheDictionaryFile(); // new File(APACHE_DICT_TARGET_FILE);
+		}
 
 		final List<Word> result = new ArrayList<>();
 
