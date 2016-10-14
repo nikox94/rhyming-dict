@@ -1,5 +1,7 @@
 package com.serene.kid.dict.controllers;
 
+import java.util.stream.IntStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +35,7 @@ public class WordController {
 		final StringBuilder postgresRet = new StringBuilder();
 
 		long startTimeGet = System.nanoTime();
-		jedis.smembers("words");
+		IntStream.range(0, 100).forEach(s -> jedis.smembers("words"));
 		long endTimeGet = System.nanoTime();
 
 		long startTimeStream = System.nanoTime();
@@ -45,7 +47,7 @@ public class WordController {
 
 
 		startTimeGet = System.nanoTime();
-		wordRepository.findAll();
+		IntStream.range(0, 100).forEach(s -> wordRepository.findAll());
 		endTimeGet = System.nanoTime();
 
 		startTimeStream = System.nanoTime();
@@ -56,10 +58,10 @@ public class WordController {
 		final long dbDurationStream = (endTimeStream - startTimeStream);  //divide by 1000000 to get milliseconds.
 
 
-		System.out.println("Pure Redis get took: " + redisDurationGet*1E-6);
+		System.out.println("Pure Redis get took: " + redisDurationGet*1E-8);
 		System.out.println("Redis get and Java text manipulation took: " + redisDurationStream*1E-6);
 
-		System.out.println("Pure Postgres get took: " + dbDurationGet*1E-6);
+		System.out.println("Pure Postgres get took: " + dbDurationGet*1E-8);
 		System.out.println("Postgres get and Java text manipulation took: " + dbDurationStream*1E-6);
 
 		System.out.println("Total word count: " + jedis.scard("words"));
