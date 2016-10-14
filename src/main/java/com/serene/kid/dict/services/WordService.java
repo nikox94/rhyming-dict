@@ -14,14 +14,13 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.axet.wget.WGet;
 import com.serene.kid.dict.entities.Word;
-import com.serene.kid.dict.repositories.WordRepository;
 
 import lombok.extern.java.Log;
+import redis.clients.jedis.Jedis;
 
 @Service
 @Log
@@ -29,13 +28,6 @@ public class WordService {
 
 	final String APACHE_DICT_URL = "http://downloads.sourceforge.net/project/aoo-extensions/744/8/dictionaries-bg.oxt";
 	final String APACHE_DICT_TARGET_FILE = System.getProperty("java.io.tmpdir") + "dictionaries-bg.oxt";
-
-	private final WordRepository wordRepository;
-
-	@Autowired
-	public WordService(final WordRepository wordRepository) {
-		this.wordRepository = wordRepository;
-	}
 
 	private File downloadApacheDictionaryFile() {
 		try {
@@ -71,6 +63,11 @@ public class WordService {
 
 		try {
 			final ZipFile zipFile = new ZipFile(apacheDictZip);
+
+			log.log(Level.INFO, "Starting connection to Redis");
+			final Jedis jedis = new Jedis("localhost");
+			log.log(Level.INFO, "Connected to Redis");
+
 			final ZipEntry dicFile = zipFile.stream().filter(s -> s.getName().equals("spell/bg_BG.dic")).findFirst().get();
 			// TODO: include aff file ending parsing
 			// final ZipEntry affFile = zipFile.stream().filter(s -> s.getName().equals("spell/bg_BG.aff")).findFirst().get();
@@ -80,9 +77,13 @@ public class WordService {
 
 			// Ignore first line. It contains the number of words in the file.
 			reader.readLine();
-			reader.lines().filter(s -> !s.contains("/")).forEach(s -> result.add(new Word(s)));
+			reader.lines().filter(s -> !s.contains("/")).forEach(s -> {
+				result.add(new Word(s));
+				jedis.set(s, "");
+					});
 
 			zipFile.close();
+			jedis.close();
 
 		} catch (final ZipException e) {
 			e.printStackTrace();
