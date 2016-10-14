@@ -29,12 +29,15 @@ public class WordController {
 	public String getAllWords() {
 		final Jedis jedis = new Jedis("localhost");
 
+		final StringBuilder redisRet = new StringBuilder();
+		final StringBuilder postgresRet = new StringBuilder();
+
 		long startTimeGet = System.nanoTime();
 		jedis.keys("*");
 		long endTimeGet = System.nanoTime();
 
 		long startTimeStream = System.nanoTime();
-		final String redisRet = jedis.keys("*").stream().map(s -> s.toString()).reduce("", (a, b) -> a + " ;; " + b);
+		jedis.keys("*").stream().forEach(s -> redisRet.append(" ;; " + s));
 		long endTimeStream = System.nanoTime();
 
 		final long redisDurationGet = (endTimeGet - startTimeGet);  //divide by 1000000 to get milliseconds.
@@ -46,7 +49,7 @@ public class WordController {
 		endTimeGet = System.nanoTime();
 
 		startTimeStream = System.nanoTime();
-		final String dbRet = wordRepository.findAll().stream().map(s -> s.getWordText()).reduce("", (a, b) -> a + " ;; " + b);
+		wordRepository.findAll().stream().forEach(s -> postgresRet.append(" ;; " + s));
 		endTimeStream = System.nanoTime();
 
 		final long dbDurationGet = (endTimeGet - startTimeGet);  //divide by 1000000 to get milliseconds.
@@ -59,9 +62,11 @@ public class WordController {
 		System.out.println("Pure Postgres get took: " + dbDurationGet*1E-6);
 		System.out.println("Postgres get and Java text manipulation took: " + dbDurationStream*1E-6);
 
+		System.out.println("Total word count: " + jedis.keys("*").size());
+
 		jedis.close();
 
-		return dbRet;
+		return redisRet.toString();
 
 	}
 }
