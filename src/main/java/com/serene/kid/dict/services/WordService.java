@@ -79,7 +79,7 @@ public class WordService {
 			reader.readLine();
 			reader.lines().filter(s -> !s.contains("/")).forEach(s -> {
 				result.add(new Word(s));
-				jedis.set(s, "");
+				jedis.sadd("words", s);
 					});
 
 			zipFile.close();
