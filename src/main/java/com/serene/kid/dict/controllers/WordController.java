@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.serene.kid.dict.annotations.UsesJedis;
 import com.serene.kid.dict.repositories.WordRepository;
 
 import redis.clients.jedis.Jedis;
@@ -28,6 +29,7 @@ public class WordController {
 
 	@RequestMapping("/words")
 	@ResponseBody
+	@UsesJedis
 	public String getAllWords() {
 		final Jedis jedis = new Jedis("localhost");
 
