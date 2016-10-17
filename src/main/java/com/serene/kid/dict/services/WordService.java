@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -14,6 +16,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.github.axet.wget.WGet;
@@ -25,16 +29,17 @@ import redis.clients.jedis.Jedis;
 @Service
 @Log
 public class WordService {
-
+	
 	final String APACHE_DICT_URL = "http://downloads.sourceforge.net/project/aoo-extensions/744/8/dictionaries-bg.oxt";
-	final String APACHE_DICT_TARGET_FILE = System.getProperty("java.io.tmpdir") + "dictionaries-bg.oxt";
+	final Path APACHE_DICT_TARGET_FILE = FileSystems.getDefault()
+			.getPath(System.getProperty("java.io.tmpdir"), "dictionaries-bg.oxt");
 
 	private File downloadApacheDictionaryFile() {
 		try {
 			log.log(Level.INFO, "Starting download of dictionary at " + APACHE_DICT_URL);
 			final URL url = new URL(APACHE_DICT_URL);
 			log.log(Level.INFO, "Target file for download is " + APACHE_DICT_TARGET_FILE);
-			final File target = new File(APACHE_DICT_TARGET_FILE);
+			final File target = new File(APACHE_DICT_TARGET_FILE.toString());
 			final WGet w = new WGet(url, target);
 			// single threaded download. Will return here only when
 			// download completes or error.
@@ -53,7 +58,7 @@ public class WordService {
 
 	public List<Word> getWordsFromApache() {
 
-		File apacheDictZip = new File(APACHE_DICT_TARGET_FILE);
+		File apacheDictZip = new File(APACHE_DICT_TARGET_FILE.toString());
 
 		if (!apacheDictZip.exists()) {
 			apacheDictZip = downloadApacheDictionaryFile(); // new File(APACHE_DICT_TARGET_FILE);
