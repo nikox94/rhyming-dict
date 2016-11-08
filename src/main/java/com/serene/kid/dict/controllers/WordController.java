@@ -4,12 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.serene.kid.dict.annotations.UsesJedis;
-
-import redis.clients.jedis.Jedis;
-
+import com.serene.kid.dict.LightweightWordList;
 @Controller
 public class WordController {
+
+	private final LightweightWordList lightweightWordList;
+
+	public WordController(final LightweightWordList lightweightWordList) {
+		this.lightweightWordList = lightweightWordList;
+	}
 
 	@RequestMapping("/")
 	public String getMainPage() {
@@ -18,15 +21,11 @@ public class WordController {
 
 	@RequestMapping("/words")
 	@ResponseBody
-	@UsesJedis
 	public String getAllWords() {
-		final Jedis jedis = new Jedis("localhost");
 
 		final StringBuilder redisRet = new StringBuilder();
 
-		jedis.smembers("words").stream().forEach(s -> redisRet.append(" ;; " + s));
-
-		jedis.close();
+		lightweightWordList.getWordlist().stream().forEach(s -> redisRet.append(" ;; " + s.getWordText()));
 
 		return redisRet.toString();
 
