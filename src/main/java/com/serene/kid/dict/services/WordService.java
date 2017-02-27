@@ -32,7 +32,8 @@ import lombok.extern.java.Log;
 @Log
 public class WordService {
 
-	final String APACHE_DICT_URL = "http://downloads.sourceforge.net/project/aoo-extensions/744/8/dictionaries-bg.oxt";
+	final String APACHE_DICT_URL = "https://sourceforge.net/projects/aoo-extensions/files/744/8/dictionaries-bg.oxt/download?use_mirror=master";
+	// https://downloads.sourceforge.net/project/aoo-extensions/744/8/dictionaries-bg.oxt?r=&ts=1488213429&use_mirror=master
 	final Path APACHE_DICT_TARGET_FILE = FileSystems.getDefault().getPath(System.getProperty("java.io.tmpdir"),
 			"dictionaries-bg.oxt");
 
