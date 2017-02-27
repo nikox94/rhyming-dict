@@ -14,18 +14,18 @@ import lombok.Data;
 @Data
 public class LightweightWordList {
 
-	private final List<Word> wordlist;
+	private final List<Word> wordList;
 
 	private final WordService wordService;
 
 	@Autowired
 	public LightweightWordList(final WordService wordService) {
 		this.wordService = wordService;
-		wordlist = wordService.getWordsFromApache();
+		wordList = wordService.getWordsFromApache();
 	}
 
 	public LightweightWordList(final List<Word> words) {
-		wordlist = words;
+		wordList = words;
 		wordService = null;
 	}
 }

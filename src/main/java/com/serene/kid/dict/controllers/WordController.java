@@ -23,11 +23,11 @@ public class WordController {
 	@ResponseBody
 	public String getAllWords() {
 
-		final StringBuilder redisRet = new StringBuilder();
+		final StringBuilder allWords = new StringBuilder();
 
-		lightweightWordList.getWordlist().stream().forEach(s -> redisRet.append(" ;; " + s.getWordText()));
+		lightweightWordList.getWordList().stream().forEach(s -> allWords.append(" ;; " + s.getWordText()));
 
-		return redisRet.toString();
+		return allWords.toString();
 
 	}
 }
