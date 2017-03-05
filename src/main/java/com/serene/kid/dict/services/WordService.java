@@ -21,6 +21,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.github.axet.wget.WGet;
@@ -32,11 +33,13 @@ import lombok.extern.java.Log;
 @Log
 public class WordService {
 
-	final String APACHE_DICT_URL = "https://sourceforge.net/projects/aoo-extensions/files/744/8/dictionaries-bg.oxt/download?use_mirror=master";
-	// https://downloads.sourceforge.net/project/aoo-extensions/744/8/dictionaries-bg.oxt?r=&ts=1488213429&use_mirror=master
-	final Path APACHE_DICT_TARGET_FILE = FileSystems.getDefault().getPath(System.getProperty("java.io.tmpdir"),
+	@Value("${urls.apache.dict}")
+	String APACHE_DICT_URL;
+	
+	final Path APACHE_DICT_TARGET_FILE = FileSystems.getDefault().getPath(
+			System.getProperty("java.io.tmpdir"),
 			"dictionaries-bg.oxt");
-
+	
 	private File downloadApacheDictionaryFile() {
 		try {
 			log.log(Level.INFO, "Starting download of dictionary at " + APACHE_DICT_URL);
