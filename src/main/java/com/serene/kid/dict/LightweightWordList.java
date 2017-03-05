@@ -21,7 +21,7 @@ public class LightweightWordList {
 	@Autowired
 	public LightweightWordList(final WordService wordService) {
 		this.wordService = wordService;
-		wordList = wordService.getWordsFromApache();
+		wordList = wordService.getWords();
 	}
 
 	public LightweightWordList(final List<Word> words) {

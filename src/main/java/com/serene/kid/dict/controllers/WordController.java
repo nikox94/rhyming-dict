@@ -28,6 +28,5 @@ public class WordController {
 		lightweightWordList.getWordList().stream().forEach(s -> allWords.append(" ;; " + s.getWordText()));
 
 		return allWords.toString();
-
 	}
 }

@@ -62,7 +62,7 @@ public class WordService {
 		return null;
 	}
 
-	public List<Word> getWordsFromApache() {
+	public List<Word> getWords() {
 
 		File apacheDictZip = new File(APACHE_DICT_TARGET_FILE.toString());
 
