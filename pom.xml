@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.serene-kid.dict</groupId>
-	<artifactId>dict</artifactId>
+	<artifactId>rhyming-dict</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>dict</name>
-	<description>Demo project for Spring Boot</description>
+	<name>rhyming-dict</name>
+	<description>A rhyming dictionary</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
