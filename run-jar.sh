@@ -1,6 +1,6 @@
 #!/bin/bash
 
-java -jar target/dict-0.0.1-SNAPSHOT.jar | tee run-log.txt
+java -jar target/rhyming-dict-0.0.1-SNAPSHOT.jar | tee run-log.txt
 
 read -p "Exit? " answer
 
