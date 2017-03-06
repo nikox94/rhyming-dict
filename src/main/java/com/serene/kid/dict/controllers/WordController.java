@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.serene.kid.dict.LightweightWordList;
+
 @Controller
 public class WordController {
 
