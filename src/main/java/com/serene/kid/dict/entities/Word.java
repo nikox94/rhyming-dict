@@ -15,4 +15,13 @@ public class Word {
 		this.wordText = wordText;
 	}
 
+	public int length() {
+		return wordText.length();
+	}
+
+	public boolean isEqualSuffix(String word, byte nChars) {
+		return wordText.substring(wordText.length()-nChars)
+				.equalsIgnoreCase(
+				word.substring(word.length()-nChars));
+	}
 }

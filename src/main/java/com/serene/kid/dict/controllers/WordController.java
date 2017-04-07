@@ -1,6 +1,10 @@
 package com.serene.kid.dict.controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,5 +33,18 @@ public class WordController {
 		lightweightWordList.getWordList().stream().forEach(s -> allWords.append(" ;; " + s.getWordText()));
 
 		return allWords.toString();
+	}
+
+	@RequestMapping("/word/{word}/chars/{nChars}")
+	@ResponseBody
+	public List<String> getNMatchingChars(@PathVariable String word, @PathVariable byte nChars) {
+		if (word.length() < nChars)
+			throw new IllegalArgumentException("Search word is smaller then number of matched chars");
+		return lightweightWordList.getWordList()
+				.stream()
+				.filter(s -> s.length() >= nChars)
+				.filter(s -> s.isEqualSuffix(word, nChars))
+				.map(w -> w.getWordText())
+				.collect(Collectors.toList());
 	}
 }
