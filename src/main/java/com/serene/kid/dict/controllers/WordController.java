@@ -3,20 +3,26 @@ package com.serene.kid.dict.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.serene.kid.dict.LightweightWordList;
+import com.serene.kid.dict.model.IWordCache;
+import com.serene.kid.dict.model.LightweightWordList;
+import com.serene.kid.dict.services.IWordService;
 
 @Controller
 public class WordController {
 
-	private final LightweightWordList lightweightWordList;
+	private final IWordService wordService;
+	private final IWordCache wordCache;
 
-	public WordController(final LightweightWordList lightweightWordList) {
-		this.lightweightWordList = lightweightWordList;
+	@Autowired
+	public WordController(final IWordService wordService) {
+		this.wordService = wordService;
+		wordCache = new LightweightWordList(wordService.getWords());
 	}
 
 	@RequestMapping("/")
@@ -26,13 +32,9 @@ public class WordController {
 
 	@RequestMapping("/words")
 	@ResponseBody
-	public String getAllWords() {
+	public List<String> getAllWords() {
 
-		final StringBuilder allWords = new StringBuilder();
-
-		lightweightWordList.getWordList().stream().forEach(s -> allWords.append(" ;; " + s.getWordText()));
-
-		return allWords.toString();
+		return wordCache.getWordList().stream().map(s -> s.getWordText()).collect(Collectors.toList());
 	}
 
 	@RequestMapping("/word/{word}/chars/{nChars}")
@@ -40,7 +42,7 @@ public class WordController {
 	public List<String> getNMatchingChars(@PathVariable String word, @PathVariable byte nChars) {
 		if (word.length() < nChars)
 			throw new IllegalArgumentException("Search word is smaller then number of matched chars");
-		return lightweightWordList.getWordList()
+		return wordCache.getWordList()
 				.stream()
 				.filter(s -> s.length() >= nChars)
 				.filter(s -> s.isEqualSuffix(word, nChars))

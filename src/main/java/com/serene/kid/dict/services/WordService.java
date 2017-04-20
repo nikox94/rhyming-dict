@@ -31,7 +31,7 @@ import lombok.extern.java.Log;
 
 @Service
 @Log
-public class WordService {
+public class WordService implements IWordService {
 
 	@Value("${urls.apache.dict}")
 	String APACHE_DICT_URL;

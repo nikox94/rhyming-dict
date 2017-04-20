@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class DictApplicationTests {
+public class DictApplicationIntegrationTest {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -20,18 +20,24 @@ public class DictApplicationTests {
 	@Test
 	public void contextLoads() {
 	}
+	
+	@Test
+	public void homepageLoads() {
+		final String body = this.restTemplate.getForObject("/", String.class);
+		assertThat(body).contains("<title>");
+	}
 
 	@Test
 	public void checkIfCorrectlyParsedWords() {
 
 		final String body = this.restTemplate.getForObject("/words", String.class);
 		//assertThat(body).contains(" демодулирам ");
-		assertThat(body).contains(" демодулира ");
-		assertThat(body).contains(" демодулирахме ");
-		assertThat(body).contains(" демодулиращ ");
-		assertThat(body).contains(" демодулиращият ");
-		assertThat(body).doesNotContain(" демодулираейки ");
-		assertThat(body).doesNotContain(" демодулираим ");
+		assertThat(body).contains("\"демодулира\"");
+		assertThat(body).contains("\"демодулирахме\"");
+		assertThat(body).contains("\"демодулиращ\"");
+		assertThat(body).contains("\"демодулиращият\"");
+		assertThat(body).doesNotContain("\"демодулираейки\"");
+		assertThat(body).doesNotContain("\"демодулираим\"");
 
 		//assertThat(body).contains(" демон ");
 		//assertThat(body).contains(" демона ");
@@ -41,10 +47,20 @@ public class DictApplicationTests {
 
 
 		//assertThat(body).contains(" ящен ");
-		assertThat(body).contains(" ящна ");
-		assertThat(body).doesNotContain(" ящеите ");
+		assertThat(body).contains("\"ящна\"");
+		assertThat(body).doesNotContain("\"ящеите\"");
 
-		assertThat(body).contains(" Абърдийн ");
-		assertThat(body).doesNotContain("78233");
+		assertThat(body).contains("\"Абърдийн\"");
+		assertThat(body).doesNotContain("\"78233\"");
+	}
+	
+	@Test
+	public void getNMatchingChars() {
+		
+		final String body = this.restTemplate.getForObject("/word/ама/chars/3", String.class);
+		assertThat(body).contains("\"ама\"");
+		assertThat(body).contains("\"двама\"");
+		//assertThat(body).contains("\"дама\"");
+		assertThat(body).contains("\"Атакама\"");
 	}
 }
