@@ -99,25 +99,25 @@
                 <br/>
                 <hr/>
                 
-                <form class="form-inline">
+                <form class="form-inline" id="word-form">
                   <div class="form-group">
                     <label class="sr-only" for="word-query">Въведете дума</label>
                     <input type="text" class="form-control" id="word-query" placeholder="Въведете дума"/>
                   </div>
-                  <button type="submit" class="btn btn-default">Давай!</button>
+                  <button type="submit" class="btn btn-default" id="get-rhymes-bttn" onclick="showRhymes">Давай!</button>
                 </form>
                 
                 <br/> <br/> <br/>
                 
-                <h4>Съвпадат последните 2 срички</h4>
+                <h4>Съвпадат последните 2 букви</h4>
                 
-                <p>калена, малена, колена, илиилилена, корилена, какалилена</p>
+                <p id="two-letters">ゆる こうゔ, ...</p>
                 
                 <hr/>
                 
-                <h4>Съвпада последната сричка</h4>
+                <h4>Съвпадат последните 3 букви</h4>
                 
-                <p>калена, малена, горена, какана, орана, кибана, мамана, маймуна, какуна, трактуна, цуцкуна, маймуна, додона, кифона, мормона</p>
+                <p id="three-letters">ゆれてた こもれび, ...</p>
                 
             </div>
         </div>
@@ -209,6 +209,10 @@
     <!-- Theme JavaScript -->
     <script src="../static/js/grayscale.js"
             th:src="@{js/grayscale.js}"></script>
+
+    <!-- Rhymes JavaScript -->
+    <script src="../static/js/rhymes.js"
+            th:src="@{js/rhymes.js}"></script>
 
 </body>
 
