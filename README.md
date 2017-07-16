@@ -12,14 +12,14 @@ A very simple rhyming dictionary for the Bulgarian language. For now provides a 
 
 This is built using:
 
-* (Codeship)[http://codeship.com/]
-* (CircleCI)[https://circleci.com/]
-* (Travis CI)[https://travis-ci.org/]
+* [Codeship](http://codeship.com/)
+* [CircleCI](https://circleci.com/)
+* [Travis CI](https://travis-ci.org/)
 
 Analysed using:
 
-* (Codecov)[https://codecov.io/]
-* (CodeClimate)[https://codeclimate.com/]
+* [Codecov](https://codecov.io/)
+* [CodeClimate](https://codeclimate.com/)
 
 Deployed using:
 
@@ -27,6 +27,6 @@ Deployed using:
 
 Running on:
 
-* (Heroku)[https://www.heroku.com/]
+* [Heroku](https://www.heroku.com/)
 
 # Contribute
