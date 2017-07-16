@@ -1,6 +1,10 @@
 # Rhyming dictionary for Bulgarian
 
-A very simple rhyming dictionary for the Bulgarian language. For now provides a sleeck interface and an easy search. Expected developments: better rhyming matches.
+Deployed at: http://dict.yurukov.org/
+
+A very simple rhyming dictionary for the Bulgarian language. For now provides a sleek interface and an easy search. Expected developments: better rhyming matches.
+
+This is a toy project for me to test different software development tools.
 
 # Prerequisites
 
@@ -27,6 +31,6 @@ Deployed using:
 
 Running on:
 
-* [Heroku](https://www.heroku.com/)
+* [Heroku](https://www.heroku.com/) - https://bg-rhyme.herokuapp.com/
 
 # Contribute
