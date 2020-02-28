@@ -34,3 +34,6 @@ Running on:
 * [Heroku](https://www.heroku.com/) - https://bg-rhyme.herokuapp.com/
 
 # Contribute
+
+Sorry, we're not ready to support contributors properly for the moment.
+
