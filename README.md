@@ -6,34 +6,34 @@ A very simple rhyming dictionary for the Bulgarian language. For now provides a 
 
 This is a toy project for me to test different software development tools.
 
-# Prerequisites
+## Prerequisites
 
-# Build
+## Build
 
-# Run
+## Run
 
-# CI
+## CI
 
 This is built using:
 
-* [Codeship](http://codeship.com/)
+* [~Codeship~](http://codeship.com/)
 * [CircleCI](https://circleci.com/)
-* [Travis CI](https://travis-ci.org/)
+* [~Travis CI~](https://travis-ci.org/)
 
 Analysed using:
 
-* [Codecov](https://codecov.io/)
-* [CodeClimate](https://codeclimate.com/)
+* [~Codecov~](https://codecov.io/)
+* [~CodeClimate~](https://codeclimate.com/)
 
 Deployed using:
 
-* Codeship
+* ~Codeship~ CircleCI
 
 Running on:
 
 * [Heroku](https://www.heroku.com/) - https://bg-rhyme.herokuapp.com/
 
-# Contribute
+## Contribute
 
 Sorry, we're not ready to support contributors properly for the moment.
 
